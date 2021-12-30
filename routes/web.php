@@ -15,8 +15,6 @@ use App\Http\Controllers\ScraperController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ScraperController::class, 'scraper1']);
 
-Route::get('/scraper1', [ScraperController::class, 'scraper1']);
+Route::get('export', [ScraperController::class, 'export']);

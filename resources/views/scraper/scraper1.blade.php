@@ -10,4 +10,9 @@
 @endforeach
 </ul>
 
+{{-- bouton pour générer CSV --}}
+<div class="text-center">
+    <a href="{{ url('export') }}" class="btn btn-primary">Générer CSV</a>
+</div>
+
 @endsection
