@@ -6,7 +6,7 @@
 
 <ul>
 @foreach ($data as $key => $value)
-    <li>{{ $key }} : <a href='https://decathlon.fr/{{ $value }}'>cliquer</a></li>
+    <li>{{ $key }} : <a href='https://decathlon.fr/{{ $value }}'>cliquez</a></li>
 @endforeach
 </ul>
 
