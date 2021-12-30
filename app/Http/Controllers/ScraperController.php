@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Goutte\Client;
 
+use App\Http\Controllers\DbController; 
+
 use App\Exports\BermudaExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -13,15 +15,23 @@ class ScraperController extends Controller
 {
     private $results =  array();
 
-    public function scraper1()
-    {
-        $title = "scraper1 - decathlon bermuda homme";
-
+    public function scraping($url){
+            
         $client = new Client();
-        $url = "https://www.decathlon.fr/browse/c0-homme/nature-bermuda/_/N-1qu1ue2Z19ohcfe";
         $page = $client->request('GET',$url);
 
-        // print_r($page);
+        return $page;
+    
+    }
+
+    public function scraper1()
+    {
+        // call the function to connect to the database
+        // $db = DbController::connect();
+
+        $title = "scraper1 - decathlon bermuda homme";
+
+        $page = $this->scraping('https://www.decathlon.fr/browse/c0-homme/nature-bermuda/_/N-1qu1ue2Z19ohcfe');
 
         $page->filter('.dpb-holder')->each(function($item) {
             $this->results[$item->filter('.dpb-product-model-link .vh')->text()] = $item->filter('.dpb-product-model-link')->attr('href');
@@ -35,24 +45,7 @@ class ScraperController extends Controller
     public function export(){
         // fonction pour export le CSV
 
-        $bermudas = [
-            [
-                'name' => 'One',
-                'link' => 'test'
-            ],
-            [
-                'name' => 'Two',
-                'link' => 'test'
-            ],
-            [
-                'name' => 'Three',
-                'link' => 'test'
-            ]
-        ];
-
-        $client = new Client();
-        $url = "https://www.decathlon.fr/browse/c0-homme/nature-bermuda/_/N-1qu1ue2Z19ohcfe";
-        $page = $client->request('GET',$url);
+        $page = $this->scraping('https://www.decathlon.fr/browse/c0-homme/nature-bermuda/_/N-1qu1ue2Z19ohcfe');
 
         $page->filter('.dpb-holder')->each(function($item) {
             $this->results[$item->filter('.dpb-product-model-link .vh')->text()] = $item->filter('.dpb-product-model-link')->attr('href');
